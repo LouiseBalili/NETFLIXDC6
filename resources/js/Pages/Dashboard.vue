@@ -5,30 +5,30 @@ import Card from '@/Components/Card.vue'
 import {inject, computed} from 'vue'
 import { Calendar } from 'v-calendar'
 const themeMode = inject('themeMode')
-const props = defineProps({
-    user:Number,
-    payroll:Number,
-    cashAdvance:Object
-})
+// const props = defineProps({
+//    user:Number,
+//    payroll:Number,
+//    cashAdvance:Object
+// })
 
-const attributes = computed(() => {
-    if (!props.cashAdvance.data) {
-        return [];
-    }
+// const attributes = computed(() => {
+//     if (!props.cashAdvance.data) {
+//         return [];
+//     }
 
-        return props.cashAdvance.data.map(cashAdvance => ({
-        key: `cashAdvance-${cashAdvance.id}`,
-        dates: cashAdvance.requestDate,
-        employee: cashAdvance.employee.user.firstName + ' ' + cashAdvance.employee.user.lastName,
-        highlight: 'green',
-        popover: {
-            label: cashAdvance.employee.user.firstName+' '+cashAdvance.employee.user.lastName+' cash advance amount ₱ '+cashAdvance.amount, // Use a different name for the amount
-            hideIndicator: true
-        },
-        order: 0
-    }));
+//         return props.cashAdvance.data.map(cashAdvance => ({
+//         key: `cashAdvance-${cashAdvance.id}`,
+//         dates: cashAdvance.requestDate,
+//         employee: cashAdvance.employee.user.firstName + ' ' + cashAdvance.employee.user.lastName,
+//         highlight: 'green',
+//         popover: {
+//             label: cashAdvance.employee.user.firstName+' '+cashAdvance.employee.user.lastName+' cash advance amount ₱ '+cashAdvance.amount, // Use a different name for the amount
+//             hideIndicator: true
+//         },
+//         order: 0
+//     }));
 
-});
+// });
 </script>
 
 <template>
@@ -48,17 +48,17 @@ const attributes = computed(() => {
                     <Card :class="themeMode">
                         <template #content>
                             <div class="flex items-center p-4  rounded-lg shadow-xs " >
-                                <div class="p-3 mr-4 text-green-500 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-green-500">
-                                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"></path>
-                                  </svg>
+                                <div class="p-3 mr-4 text-red-600 bg-pink-100 rounded-full">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" data-slot="icon" class="w-6 h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 0 1-1.125-1.125M3.375 19.5h1.5C5.496 19.5 6 18.996 6 18.375m-3.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-1.5A1.125 1.125 0 0 1 18 18.375M20.625 4.5H3.375m17.25 0c.621 0 1.125.504 1.125 1.125M20.625 4.5h-1.5C18.504 4.5 18 5.004 18 5.625m3.75 0v1.5c0 .621-.504 1.125-1.125 1.125M3.375 4.5c-.621 0-1.125.504-1.125 1.125M3.375 4.5h1.5C5.496 4.5 6 5.004 6 5.625m-3.75 0v1.5c0 .621.504 1.125 1.125 1.125m0 0h1.5m-1.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m1.5-3.75C5.496 8.25 6 7.746 6 7.125v-1.5M4.875 8.25C5.496 8.25 6 8.754 6 9.375v1.5m0-5.25v5.25m0-5.25C6 5.004 6.504 4.5 7.125 4.5h9.75c.621 0 1.125.504 1.125 1.125m1.125 2.625h1.5m-1.5 0A1.125 1.125 0 0 1 18 7.125v-1.5m1.125 2.625c-.621 0-1.125.504-1.125 1.125v1.5m2.625-2.625c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125M18 5.625v5.25M7.125 12h9.75m-9.75 0A1.125 1.125 0 0 1 6 10.875M7.125 12C6.504 12 6 12.504 6 13.125m0-2.25C6 11.496 5.496 12 4.875 12M18 10.875c0 .621-.504 1.125-1.125 1.125M18 10.875c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125m-12 5.25v-5.25m0 5.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125m-12 0v-1.5c0-.621-.504-1.125-1.125-1.125M18 18.375v-5.25m0 5.25v-1.5c0-.621.504-1.125 1.125-1.125M18 13.125v1.5c0 .621.504 1.125 1.125 1.125M18 13.125c0-.621.504-1.125 1.125-1.125M6 13.125v1.5c0 .621-.504 1.125-1.125 1.125M6 13.125C6 12.504 5.496 12 4.875 12m-1.5 0h1.5m-1.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125M19.125 12h1.5m0 0c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h1.5m14.25 0h1.5" />
+                                    </svg>
                                 </div>
                                 <div>
                                   <p class="mb-2 text-lg font-medium text-black ">
-                                   Users
+                                   Movies
                                   </p>
                                   <p class="text-xl font-semibold text-black">
-                                    {{ user }}
+                                    <!-- {{ user }} -->
                                   </p>
                                 </div>
                               </div>
@@ -68,17 +68,17 @@ const attributes = computed(() => {
                     <Card>
                         <template #content>
                             <div class="flex items-center p-4  rounded-lg shadow-xs">
-                                <div class="p-3 mr-4 text-green-500 bg-green-100 rounded-full dark:text-green-100 dark:bg-green-500">
-                                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
-                                  </svg>
+                                <div class="p-3 mr-4 text-red-600 bg-pink-100 rounded-full">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" data-slot="icon" class="w-6 h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 20.25h12m-7.5-3v3m3-3v3m-10.125-3h17.25c.621 0 1.125-.504 1.125-1.125V4.875c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125Z" />
+                                    </svg>
                                 </div>
                                 <div>
                                   <p class="mb-2 text-lg font-medium text-black">
-                                      No of Payrolls
+                                      TV Shows
                                   </p>
                                   <p class="text-xl font-semibold text-black">
-                                   {{ payroll }}
+                                   <!-- {{ payroll }} -->
                                   </p>
                                 </div>
                               </div>

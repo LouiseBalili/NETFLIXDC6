@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <div class=" ml-8 w-100 rounded-lg bg-gray-100 ">
+    <div class=" ml-8 w-100 rounded-lg bg-gray-100">
 
         <div >
             <slot name="head"></slot>
