@@ -5,11 +5,11 @@ import Card from '@/Components/Card.vue'
 import {inject, computed} from 'vue'
 import { Calendar } from 'v-calendar'
 const themeMode = inject('themeMode')
-// const props = defineProps({
-//    user:Number,
-//    payroll:Number,
-//    cashAdvance:Object
-// })
+const props = defineProps({
+   tvshow:Number,
+   movie:Number,
+
+})
 
 // const attributes = computed(() => {
 //     if (!props.cashAdvance.data) {
@@ -54,11 +54,11 @@ const themeMode = inject('themeMode')
                                     </svg>
                                 </div>
                                 <div>
-                                  <p class="mb-2 text-lg font-medium text-black ">
+                                  <p class="mb-2 text-lg font-medium text-black mr-24">
                                    Movies
                                   </p>
-                                  <p class="text-xl font-semibold text-black">
-                                    <!-- {{ user }} -->
+                                  <p class="text-xl font-semibold text-red-500">
+                                    <!-- {{ movie }} -->
                                   </p>
                                 </div>
                               </div>
@@ -73,13 +73,13 @@ const themeMode = inject('themeMode')
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 20.25h12m-7.5-3v3m3-3v3m-10.125-3h17.25c.621 0 1.125-.504 1.125-1.125V4.875c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125Z" />
                                     </svg>
                                 </div>
-                                <div>
-                                  <p class="mb-2 text-lg font-medium text-black">
-                                      TV Shows
-                                  </p>
-                                  <p class="text-xl font-semibold text-black">
-                                   <!-- {{ payroll }} -->
-                                  </p>
+                                <div class="flex">
+                                    <p class="mb-2 text-lg font-medium text-black mr-24">
+                                        TV Shows
+                                    </p>
+                                    <p class="text-2xl font-semibold text-red-500 rounded-full">
+                                        {{ tvshow }}
+                                    </p>
                                 </div>
                               </div>
                         </template>
@@ -88,9 +88,9 @@ const themeMode = inject('themeMode')
                 </div>
             </div>
         </div>
-        <div class="mx-5 mt-5">
+        <!-- <div class="mx-5 mt-5">
             <Calendar :attributes="attributes" />
-        </div>
+        </div> -->
 
     </div>
 
