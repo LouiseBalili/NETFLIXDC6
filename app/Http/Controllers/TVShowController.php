@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\TVShow;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Request as HttpRequest;
 
 class TVShowController extends Controller
 {
@@ -13,17 +12,10 @@ class TVShowController extends Controller
      */
     public function index()
     {
-        return inertia('TVShow/index', [
-            'tvshows' => TVShow::query()
-                ->when(HttpRequest::input('search'), function ($query, $search) {
-                    $query->where('title', 'like', '%' . $search . '%')
-                        ->orWhere('genres', 'like', '%' . $search . '%')
-                        ->orWhere('release_date', 'like', '%' . $search . '%');
-                })
-                ->orderBy('release_date', 'desc')
-                ->paginate(7)
-                ->withQueryString(),
-            'filters' => HttpRequest::only(['search'])
+        $tvshows = TVShow::orderBy('id', 'desc')->get();
+
+        return inertia('TVShow/index',[
+            'tvshows' => $tvshows
         ]);
     }
 
@@ -51,12 +43,37 @@ class TVShowController extends Controller
 
         if($request->tvshow_pic) {
             $fileName = time().'.'.$request->tvshow_pic->extension();
-            $request->tvshow_pic->move(public_path('images/client_tvshow_pics'), $fileName);
+            $request->tvshow_pic->move(public_path('uploads/tvshow_pic'), $fileName);
             $fields['tvshow_pic'] = $fileName;
         }
 
         TVShow::create($fields);
 
         return redirect('/tvshows')->with('success', 'TV Show added successfully!');
+    }
+
+    public function show(TVShow $tvshow) {
+        return inertia('TVShow/show', compact('tvshow'));
+    }
+
+    public function edit(TVShow $tvshow) {
+        return inertia('TVShow/edit', compact('tvshow'));
+    }
+
+    public function update(TVShow $tvshow, Request $request) {
+        $request->validate([
+            'title' => 'string|required',
+            'genres' => 'string|required',
+            'release_date' => 'date|required',
+            'summary' => 'string|required',
+        ]);
+
+        $tvshow->update($request->all());
+
+        return redirect('/tvshows/' . $tvshow->id);
+    }
+
+    public function search($searchKey) {
+        return inertia('TVShow/index', ['tvshows' => TVShow::where('title', 'like', "%$searchKey%")->orWhere('genres', 'like', "%$searchKey%")->orWhere('release_date', 'like', "%$searchKey%")->orWhere('summary', 'like', "%$searchKey%")->get()]);
     }
 }

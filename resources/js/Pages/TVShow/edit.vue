@@ -6,16 +6,17 @@
     import InputLabel from '@/Components/InputLabel.vue';
     import SecondaryButton from '@/Components/SecondaryButton.vue';
 
-    const form = useForm({
-        title: null,
-        genres: null,
-        release_date: null,
-        summary: null,
-        movie_pic: '',
+    const props = defineProps({
+        tvshow:Object
     })
 
-    const props = defineProps({
-        movies:Object
+    const form = useForm({
+        title: props.tvshow.title,
+        genres: props.tvshow.genres,
+        release_date: props.tvshow.release_date,
+        summary: props.tvshow.summary,
+        tvshow_pic: props.tvshow.tvshow_pic,
+        tvshow_pic_url: props.tvshow.tvshow_pic_url
     })
 
     const photoPreview = ref(null);
@@ -26,32 +27,33 @@
     };
 
     const updatePhotoPreview = () => {
-        const photo = photoInput.value.files[0];
+    const photo = photoInput.value.files[0];
 
-        if (! photo) return;
+    if (!photo) return;
 
-        const reader = new FileReader();
+    const reader = new FileReader();
 
-        reader.onload = (e) => {
-            photoPreview.value = e.target.result;
-        };
-
-    reader.readAsDataURL(photo);
+    reader.onload = (e) => {
+        photoPreview.value = e.target.result;
     };
 
+    reader.readAsDataURL(photo);
+};
+
+
     const submit = async () => {
-        form.post('/movies/');
+        form.put('/tvshows/' + props.tvshow.id)
     };
 </script>
 
 <template>
-    <Head title="Add Movie" />
+    <Head title="Edit TV Show" />
 
     <SideBarLayout>
         <template #header>
             <div class="flex">
-                <h2 class="flex-1 font-semibold text-xl leading-tight mt-3">Add Movie</h2>
-                <Link class="button1 mb-2 py-2 px-4 mr-5 bg-white shadow border rounded mr-3 text-gray-500 hover:text-gray-800" as="button" href="/movies">Back</Link>
+                <h2 class="flex-1 font-semibold text-xl leading-tight mt-3">Edit TV Show</h2>
+                <Link class="button1 mb-2 py-2 px-4 mr-5 bg-white shadow border rounded mr-3 text-gray-500 hover:text-gray-800" as="button" :href="'/tvshows/' + tvshow.id">Back</Link>
             </div>
         </template>
 
@@ -60,7 +62,7 @@
             <div class="flex flex-col justify-center items-center">
                 <div class="relative flex flex-col items-center rounded-[20px] w-[850px] max-w-[95%] mx-auto bg-clip-border shadow-3xl shadow-shadow-500 p-3">
                     <h4 class="px-2 text-xl mb-3 font-bold text-navy-700">
-                        Movie Details
+                        TV Show Details
                     </h4>
                     <div class="mt-2 mb-8 w-full">
                         <form @submit.prevent="submit" class="flex">
@@ -69,23 +71,22 @@
                         <input
                             ref="photoInput"
                             type="file"
-                            @input="form.movie_pic = $event.target.files[0]"
+                            @input="form.tvshow_pic = $event.target.files[0]"
                             class="hidden"
                             @change="updatePhotoPreview"
                         >
 
-                        <InputLabel for="photo" value="Movie Photo" />
+                        <InputLabel for="photo" value="TV Show Photo" />
 
-                        <!-- Current Movie Photo -->
-                        <div v-show="! photoPreview" class="mt-2">
-                            <div class="border-dashed border-2 border-gray-300 px-36 py-36 mb-3 flex justify-center items-center svg-img">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
-                                </svg>
-                            </div>
+                     <!-- Current TV Show Photo -->
+                    <div v-show="!photoPreview" class="mt-2">
+                        <div class="px-36 py-36 mb-3 flex justify-center items-center"
+                            :style="'background-image: url(\'' + form.tvshow_pic_url + '\'); background-size: cover;'">
                         </div>
+                    </div>
 
-                        <!-- New Movie Photo Preview -->
+
+                        <!-- New TV Show Photo Preview -->
                         <div v-show="photoPreview" class="mt-2">
                             <span
                                 class="block w-80 h-80 bg-cover mb-2 bg-no-repeat bg-center"
@@ -97,7 +98,7 @@
                             Select A Photo
                         </SecondaryButton>
 
-                        <InputError :message="form.errors.movie_pic" class="mt-2" />
+                        <InputError :message="form.errors.tvshow_pic" class="mt-2" />
                     </div>
 
                             <div class="flex-1 pr-4 ms-8">
@@ -119,7 +120,7 @@
                                     <div class="text-red-600" v-if="form.errors.summary">{{ form.errors.summary }}</div>
 
                                     <button class="px-4 py-2 mt-2 bg-red-500 w-full rounded border border-red-500 shadow text-white">
-                                        Create Movie
+                                        Save Changes
                                     </button>
                                   </div>
                             </div>

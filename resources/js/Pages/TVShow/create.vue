@@ -51,7 +51,7 @@
         <template #header>
             <div class="flex">
                 <h2 class="flex-1 font-semibold text-xl leading-tight mt-3">Add TV Show</h2>
-                <Link class="button1 mb-2 py-2 px-4 mr-5 bg-gray-500 shadow border-gray-500 border rounded mr-3 text-white" as="button" href="/tvshows">Back</Link>
+                <Link class="button1 mb-2 py-2 px-4 mr-5 bg-white shadow border rounded mr-3 text-gray-500 hover:text-gray-800" as="button" href="/tvshows">Back</Link>
             </div>
         </template>
 
@@ -97,7 +97,7 @@
                             Select A Photo
                         </SecondaryButton>
 
-                        <InputError :message="form.errors.photo" class="mt-2" />
+                        <InputError :message="form.errors.tvshow_pic" class="mt-2" />
                     </div>
 
                             <div class="flex-1 pr-4 ms-8">

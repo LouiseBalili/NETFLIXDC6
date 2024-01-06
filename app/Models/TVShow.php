@@ -22,7 +22,7 @@ class TVShow extends Model
     ];
 
     public function getTVShowPicUrlAttribute() {
-        $url = $this->tvshow_pic ? asset("images/show_tvshow_pics/" . $this->tvshow_pic) : 'https://www.pngitem.com/pimgs/m/144-1441488_computer-icons-clapperboard-film-animation-clapperboard-png-transparent.png';
+        $url = $this->tvshow_pic ? asset("uploads/tvshow_pic/" . $this->tvshow_pic) : 'https://www.pngitem.com/pimgs/m/144-1441488_computer-icons-clapperboard-film-animation-clapperboard-png-transparent.png';
         return $url;
     }
 }
