@@ -44,14 +44,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/tvshows', [TVShowController::class, 'index'])->name('tvshow.index');
     Route::get('/tvshows/request', [TVShowRequestController::class, 'create'])->name('tvshowrequest.request');
     Route::post('/tvshows/request', [TVShowRequestController::class, 'store'])->name('tvshowrequest.store');
-    Route::get('/tvshows/{tvshow}', [TVShowController::class, 'show'])->name('tvshow.show');
+
 
     Route::get('/movies', [MovieController::class, 'index'])->name('movie.index');
     Route::get('/movies/request', [MovieRequestController::class, 'create'])->name('movierequest.request');
     Route::post('/movies/request', [MovieRequestController::class, 'store'])->name('movierequest.store');
-    Route::get('/movies/{movie}', [MovieController::class, 'show'])->name('movie.show');
 
     Route::middleware(['auth', 'can:manage_all'])->group(function(){
+        Route::get('/tvshows/testadd', [TVShowRequestController::class, 'testadd'])->name('tvshowrequest.testadd');
         Route::get('/tvshows/create', [TVShowController::class, 'create'])->name('tvshow.create');
         Route::post('/tvshows', [TVShowController::class, 'store'])->name('tvshow.store');
         Route::get('/tvshows/edit/{tvshow}', [TVShowController::class, 'edit'])->name('tvshow.edit');
@@ -68,6 +68,9 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
     });
+
+    Route::get('/tvshows/{tvshow}', [TVShowController::class, 'show'])->name('tvshow.show');
+    Route::get('/movies/{movie}', [MovieController::class, 'show'])->name('movie.show');
 });
 
 

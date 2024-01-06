@@ -61,6 +61,7 @@
                     <Link class="button1 mb-2 py-2 px-3 bg-red-500 shadow border-red-500 border rounded mr-3 text-white" as="button"  href="/tvshows/create" v-if="$page.props.auth.permissions.includes('manage_all')" >Add TV Shows</Link>
                 </div>
             </div>
+
             <div v-if="$page.props.flash.success" id="flash-success-message" class="absolute top-7 left-65 p-4 bg-green-300 border border-gray-300 rounded-md shadow-md">
                 {{ $page.props.flash.success }}
                 <div class="progress-bar success"></div>
@@ -75,7 +76,6 @@
         <div class="py-12">
             <div class="max-w-7xl mx-auto ml-10 mr-10">
                 <div class="overflow-hidden shadow-sm sm:rounded-lg flex flex-wrap justify-between">
-
                     <div class="w-full sm:w-[48%] md:w-[32%] lg:w-[30%] mb-4" v-for="tvshow in tvshows" :key="tvshow.id">
                         <TVShowCard :tvshow="tvshow" />
                     </div>

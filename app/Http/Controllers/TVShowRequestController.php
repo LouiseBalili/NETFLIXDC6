@@ -38,4 +38,8 @@ class TVShowRequestController extends Controller
         return redirect('/tvshows')->with('success', 'Request is being processed.');
     }
 
+    public function testadd()
+    {
+        return inertia('TVShow/testadd');
+    }
 }
