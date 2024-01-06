@@ -60,4 +60,25 @@ class MovieController extends Controller
         return inertia('Movie/show', compact('movie'));
     }
 
+    public function edit(Movie $movie) {
+        return inertia('Movie/edit', compact('movie'));
+    }
+
+    public function update(Movie $movie, Request $request) {
+        $request->validate([
+            'title' => 'string|required',
+            'genres' => 'string|required',
+            'release_date' => 'date|required',
+            'summary' => 'string|required',
+        ]);
+
+        $movie->update($request->all());
+
+        return redirect('/movies/' . $movie->id);
+    }
+
+    public function destroy(Movie $movie) {
+        $movie->delete();
+        return redirect('/movies')->with('success', 'Movie deleted successfully!');
+    }
 }

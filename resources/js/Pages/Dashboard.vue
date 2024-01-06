@@ -1,9 +1,13 @@
 <script setup>
 import SideBarLayout from '@/Layouts/SideBarLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, usePage } from '@inertiajs/vue3';
 import Card from '@/Components/Card.vue'
-import {inject, computed} from 'vue'
-import { Calendar } from 'v-calendar'
+import {inject} from 'vue'
+import { Calendar } from '@fullcalendar/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import { ref, onMounted } from 'vue';
+
 const themeMode = inject('themeMode')
 const props = defineProps({
    tvshow:Number,
@@ -11,24 +15,43 @@ const props = defineProps({
 
 })
 
-// const attributes = computed(() => {
-//     if (!props.cashAdvance.data) {
-//         return [];
-//     }
+const { events } = usePage().props;
 
-//         return props.cashAdvance.data.map(cashAdvance => ({
-//         key: `cashAdvance-${cashAdvance.id}`,
-//         dates: cashAdvance.requestDate,
-//         employee: cashAdvance.employee.user.firstName + ' ' + cashAdvance.employee.user.lastName,
-//         highlight: 'green',
-//         popover: {
-//             label: cashAdvance.employee.user.firstName+' '+cashAdvance.employee.user.lastName+' cash advance amount ₱ '+cashAdvance.amount, // Use a different name for the amount
-//             hideIndicator: true
-//         },
-//         order: 0
-//     }));
+const calendarOptions = ref({
+  plugins: [dayGridPlugin, timeGridPlugin],
+  initialView: 'dayGridMonth',
+  events: events,
+  dayRender: function (info) {
+    const date = info.date.toISOString().split('T')[0];
+    const hasData = events.some(event => event.start === date);
 
-// });
+    const cell = info.el;
+    const tooltip = document.createElement('div');
+    tooltip.className = 'tooltip';
+    tooltip.textContent = `Plugin Data: ${info.dayNumberText}`;
+    tooltip.style.display = hasData ? 'block' : 'none'; // initially hide the tooltip
+
+    cell.appendChild(tooltip);
+
+    cell.addEventListener('mouseenter', () => {
+      tooltip.style.display = 'block'; // show the tooltip on hover
+    });
+
+    cell.addEventListener('mouseleave', () => {
+      tooltip.style.display = 'none'; // hide the tooltip when mouse leaves
+    });
+  },
+});
+
+onMounted(() => {
+  const calendarEl = document.getElementById('calendar');
+
+  if (calendarEl) {
+    const calendar = new Calendar(calendarEl, calendarOptions.value);
+    calendar.render();
+  }
+});
+
 </script>
 
 <template>
@@ -88,11 +111,25 @@ const props = defineProps({
                     </div>
                 </div>
             </div>
-        <!-- <div class="mx-5 mt-5">
-            <Calendar :attributes="attributes" />
-        </div> -->
+
+            <div class="bg-white dark:bg-green-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="text-white p-10" id="calendar"></div>
+            </div>
 
     </div>
 
     </SideBarLayout>
 </template>
+
+<style scoped>
+.tooltip {
+  position: absolute;
+  top: -20px; /* Adjust this value based on your design */
+  left: 20px; /* Adjust this value based on your design */
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+</style>

@@ -76,4 +76,9 @@ class TVShowController extends Controller
     public function search($searchKey) {
         return inertia('TVShow/index', ['tvshows' => TVShow::where('title', 'like', "%$searchKey%")->orWhere('genres', 'like', "%$searchKey%")->orWhere('release_date', 'like', "%$searchKey%")->orWhere('summary', 'like', "%$searchKey%")->get()]);
     }
+
+    public function destroy(TVShow $tvshow) {
+        $tvshow->delete();
+        return redirect('/tvshows')->with('success', 'TV Show deleted successfully!');
+    }
 }

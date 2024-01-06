@@ -4,7 +4,7 @@
     import { watch, ref, onMounted } from 'vue';
     import moment from'moment'
     import {inject} from 'vue'
-    import MovieCard from '@/Components/MovieCard.vue';
+    import MovieTypeCard from '@/Components/MovieTypeCard.vue';
 
     const themeMode = inject('themeMode')
     const props= defineProps({
@@ -58,7 +58,7 @@
                 </div>
                 <div class="flex">
                     <Link class="button1 mb-2 py-2 px-3 bg-gray-500 shadow border-gray-500 border rounded mr-3 text-white" as="button" href="/movies/request">Request Movies</Link>
-                    <Link class="button1 mb-2 py-2 px-3 bg-red-500 shadow border-red-500 border rounded mr-3 text-white" as="button" href="/movies/create">Add Movies</Link>
+                    <Link v-if="$page.props.auth.permissions.includes('manage_all')" class="button1 mb-2 py-2 px-3 bg-red-500 shadow border-red-500 border rounded mr-3 text-white" as="button" href="/movies/create">Add Movies</Link>
                 </div>
             </div>
             <div v-if="$page.props.flash.success" id="flash-success-message" class="absolute top-7 left-65 p-4 bg-green-300 border border-gray-300 rounded-md shadow-md">
@@ -77,7 +77,7 @@
                 <div class="overflow-hidden shadow-sm sm:rounded-lg flex flex-wrap justify-between">
 
                     <div class="w-full sm:w-[48%] md:w-[32%] lg:w-[30%] mb-4" v-for="movie in movies" :key="movie.id">
-                        <MovieCard :movie="movie" />
+                        <MovieTypeCard :movie="movie" />
                     </div>
 
                 </div>

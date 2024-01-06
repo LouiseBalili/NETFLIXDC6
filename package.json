@@ -18,6 +18,9 @@
         "vue": "^3.2.41"
     },
     "dependencies": {
+        "@fullcalendar/core": "^6.1.10",
+        "@fullcalendar/daygrid": "^6.1.10",
+        "@fullcalendar/timegrid": "^6.1.10",
         "@popperjs/core": "^2.11.8",
         "moment": "^2.29.4",
         "v-calendar": "^3.1.2"

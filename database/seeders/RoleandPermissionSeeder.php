@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Support\Facades\View;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
@@ -17,35 +16,23 @@ class RoleandPermissionSeeder extends Seeder
     public function run(): void
     {
         $role_admin = Role::create(['name' => 'admin']);
-        $role_employee = Role::create(['name' => 'employee']);
+        $role_user = Role::create(['name' => 'user']);
 
-        $manage_payroll   = Permission::create (['name' =>'manage_payroll']);
-        $read_payroll = Permission::create (['name' => 'read_payslip']);
-        $add_employee = Permission::create (['name'=> 'add_employee']);
-        $delete_employee = Permission::create (['name'=> 'delete_employee']);
-        $edit_employee = Permission::create (['name'=> 'edit_employee']);
-        $manage_position = Permission::create (['name'=> 'manage_position']);
+        $view_tvshow = Permission::create (['name'=> 'view_tvshow']);
+        $view_movie = Permission::create (['name'=> 'view_movie']);
+        $manage_all = Permission::create (['name'=> 'manage_all']);
+        $read_requests = Permission::create (['name' => 'read_requests']);
 
-
-        $permission_admin = [$add_employee,$delete_employee, $edit_employee, $manage_payroll ,$manage_position];
-        $permission_employee = [$read_payroll];
+        $permission_admin = [ $view_tvshow, $view_movie, $manage_all, $read_requests];
+        $permission_user = [ $view_tvshow, $view_movie];
 
 
         $role_admin->syncPermissions($permission_admin);
-        $role_employee->syncPermissions($permission_employee);
+        $role_user->syncPermissions($permission_user);
 
 
         User::find(1)->assignRole($role_admin);
-        User::find(2)->assignRole($role_employee);
+        User::find(2)->assignRole($role_user);
 
-
-        // Retrieve the "employee" and "specialEmployee" roles and pass their IDs to the view
-        $employeeRole = Role::where('name', 'employee')->first();
-        $specialEmployeeRole = Role::where('name', 'specialEmployee')->first();
-
-        View::share([
-            'employeeRoleId' => $employeeRole ? $employeeRole->id : null,
-            'specialEmployeeRoleId' => $specialEmployeeRole ? $specialEmployeeRole->id : null,
-        ]);
     }
 }

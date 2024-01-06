@@ -4,8 +4,6 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\Employee;
-use App\Models\Position;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\support\Str;
@@ -17,10 +15,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $managerPosition = Position::factory()->create([
-            'name' => 'Manager',
-            'rate' => 450.00,
-        ]);
 
         User::factory()->create([
             'name' => 'Admin',
@@ -29,22 +23,16 @@ class DatabaseSeeder extends Seeder
 
         ]);
 
-        $manager = User::factory()->create([
+        User::factory()->create([
             'name' => 'User',
             'email' => 'user@test.com',
             'password' => bcrypt('password123'),
 
         ]);
 
-        Employee::factory()->create([
-            'pos_id' => $managerPosition->id,
-            'user_id' => $manager->id,
-        ]);
-
 
         $this->call([
             RoleandPermissionSeeder::class,
-            // UserSeeder::class
         ]);
     }
 }

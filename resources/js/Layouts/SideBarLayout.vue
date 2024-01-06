@@ -155,7 +155,7 @@ const toggleDarkMode = () => {
                                 <span
                                 @click="toggleDarkMode"
                                 :class="themeMode === 'dark' ? 'dark-button' : 'light-button'"
-                                class="fixed bottom-9 right-10 h-8 w-8 bg-gray-500 rounded-full inline-flex items-center justify-center hover:bg-gray-400"
+                                class="fixed bottom-3 right-1 h-8 w-8 bg-gray-500 rounded-full inline-flex items-center justify-center hover:bg-gray-400"
                                 >
 
                                     <svg v-if="!toggleDarkMode" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" data-slot="icon" class="w-5 h-5">
